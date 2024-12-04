@@ -1,0 +1,156 @@
+.header {
+    padding: 0.5rem 2rem;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-image {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
+.logo h1 {
+    color: #2B3B4E;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #2B3B4E;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    color: #3498db;
+}
+
+.login-signup-btn {
+    background-color: #3498db;
+    color: white;
+    padding: 12px 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(52, 152, 219, 0.1);
+}
+
+.login-signup-btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+}
+
+.auth-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 4px;
+}
+
+.profile-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.profile-link:hover {
+    background-color: #3498db;
+    color: white;
+}
+
+.profile-link:hover .username {
+    color: white;
+}
+
+.profile-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.username {
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: color 0.2s ease;
+}
+
+.logout-button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #f1f5f9;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.logout-button:hover {
+    background-color: #3498db;
+    color: white;
+}
+
+.nav-links a, #logout-button {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+

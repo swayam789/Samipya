@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './Career.css';
 import { FaRocket, FaUsers, FaLightbulb, FaHeart, FaMapMarkerAlt, FaClock, FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaPhone, FaEnvelope } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import Footer from "../footer/footer";
 
 const Career = () => {
     useEffect(() => {
@@ -149,46 +149,7 @@ const Career = () => {
                 </div>
             </section>
 
-            <footer className="footer">
-                <div className="particles-bg" id="particles-js"></div>
-                <div className="containera">
-                    <div className="footer-grid">
-                        <div className="footer-section">
-                            <h3>About Samipya</h3>
-                            <h4>Find local stores selling what you need in seconds.</h4>
-                            <div className="social-links">
-                                <a href="https://facebook.com/samipya" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
-                                <a href="https://twitter.com/samipya" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
-                                <a href="https://instagram.com/samipya" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
-                                <a href="https://linkedin.com/company/samipya" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
-                            </div>
-                        </div>
-                        <div className="footer-section">
-                            <h3>Quick Links</h3>
-                            <ul>
-                                <li><Link to="/about_us">About Us</Link></li>
-                                <li><Link to="/contact_us">Contact</Link></li>
-                                <li><Link to="/privacy">Privacy Policy</Link></li>
-                                <li><Link to="/terms">Terms of Service</Link></li>
-                                <li><Link to="/faq">FAQ</Link></li>
-                                <li><Link to="/Admin">Developer</Link></li>
-                            </ul>
-                        </div>
-                        <div className="footer-section">
-                            <h3>Contact Info</h3>
-                            <ul className="contact-info1">
-                                <li><FaMapMarkerAlt /> Bharatpur, Chitwan, Nepal</li>
-                                <li><FaPhone /> +977 9821894320</li>
-                                <li><FaEnvelope /> info.samipyaa@gmail.com</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div className="footer-bottom">
-                        <p>&copy; 2024 Samipya. All rights reserved.</p>
-                    </div>
-            </footer>
+       <Footer/>
         </div>
     );
 };
