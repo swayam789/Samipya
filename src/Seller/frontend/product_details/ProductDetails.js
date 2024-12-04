@@ -14,13 +14,11 @@ const ProductDetails = () => {
     "Music & Instruments",
     "Toys & Games",
     "Automotive",
-    "Gifts & Occasions",
-    "Other"
+    "Gifts & Occasions"
   ];
   const [products, setProducts] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
   const [customCategory, setCustomCategory] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [newProduct, setNewProduct] = useState({
     name: '',
@@ -41,7 +39,6 @@ const ProductDetails = () => {
 
   const fetchProducts = async (id) => {
     try {
-      setLoading(true);
       setError(null);
       const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
       const token = localStorage.getItem('seller_token');
@@ -66,9 +63,7 @@ const ProductDetails = () => {
     } catch (error) {
       console.error('Error fetching products:', error);
       setError('Failed to load products. Please try again later.');
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   const handleAddProduct = async (e) => {
@@ -145,6 +140,63 @@ const ProductDetails = () => {
         setError('Failed to add product: ' + error.message);
     }
   };
+  const handleDeleteProduct = async (id) => {
+    try {
+    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const token = localStorage.getItem('seller_token');
+      const response = await fetch(`${API_URL}/seller/products/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete product. Status: ${response.status}`);
+      }
+
+      setProducts(products.filter(product => product._id !== id)); // Remove the deleted product from state
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      setError('Failed to delete product.');
+    }
+  };
+
+  const handleUpdateStock = async (id, newStock) => {
+    try {
+      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const token = localStorage.getItem('seller_token');
+      
+      const sellerStr = localStorage.getItem('seller');
+      const seller = JSON.parse(sellerStr);
+
+      const response = await fetch(`${API_URL}/seller/products/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          stock: newStock,
+          sellerId: seller._id
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `Failed to update stock. Status: ${response.status}`);
+      }
+
+      setProducts(products.map(product => 
+        product._id === id ? { ...product, stock: newStock } : product
+      ));
+
+    } catch (error) {
+      console.error('Error updating stock:', error);
+      setError('Failed to update stock: ' + error.message);
+    }
+  };
 
   const getImageUrl = (imagePath) => {
     if (!imagePath) return null;
@@ -172,10 +224,7 @@ const ProductDetails = () => {
                 <div key={product._id} className="product-card">
                     <div className="product-image">
                         {product.imageUrl ? (
-                            <img 
-                                src={getImageUrl(product.imagePath)}
-                                alt={product.name}
-                            />
+                           <img src={product.imageUrl} alt={product.name} />
                         ) : (
                             <div className="no-image">No Image Available</div>
                         )}
@@ -193,18 +242,26 @@ const ProductDetails = () => {
                         </p>
                     </div>
                     <div className="stock-control">
-                        <input 
+                        <input className='stock-input'
                             type="number" 
                             defaultValue={product.stock} 
                             min="0"
+                            onChange={(e) => {
+                                const newStock = parseInt(e.target.value);
+                                if (!isNaN(newStock) && newStock >= 0) {
+                                    handleUpdateStock(product._id, newStock);
+                                }
+                            }}
                         />
-                        <button className="save-button">Update Stock</button>
                     </div>
                     <div className="product-actions">
                         <button className="edit-button">
                             <FaEdit /> Edit
                         </button>
-                        <button className="delete-button">
+                        <button 
+                            className="delete-button" 
+                            onClick={() => handleDeleteProduct(product._id)}
+                        >
                             <FaTrash /> Delete
                         </button>
                     </div>

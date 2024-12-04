@@ -3,7 +3,6 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const fs = require('fs');
 const multer = require('multer');
 const userRoutes = require('./routes/userRoutes');
@@ -47,10 +46,10 @@ if (!fs.existsSync(userImagesDir)) {
 
 // Middleware
 app.use(cors({
-    origin: true,
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }));
 
 app.use(express.json());
@@ -144,7 +143,7 @@ app.use((err, req, res, next) => {
 // Configure multer with better error handling and validation
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, 'uploads', 'user-images'));
+        cb(null, path.join(__dirname, 'uploads','user-images'));
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`;
@@ -170,14 +169,6 @@ const fileFilter = (req, file, cb) => {
     cb(null, true);
 };
 
-const upload = multer({
-    storage: storage,
-    limits: {
-        fileSize: 5 * 1024 * 1024,
-        files: 1
-    },
-    fileFilter: fileFilter
-});
 
 // Serve uploaded images
 app.use('/user-images', express.static(path.join(__dirname, 'uploads/user-images')));

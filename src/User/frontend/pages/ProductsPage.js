@@ -155,7 +155,7 @@ const ProductsPage = () => {
                                         <p className="description2">{product.description}</p>
                                         <p className="description2">Category: {product.category}</p>
                                         <FaPhone className="icon3" />
-                                        <span>{product.seller?.contact}</span><br/>
+                                        <span>{product.seller.contact || "No number"}</span><br/>
                                         <FaEnvelope className="icon3" />
                                         <span>{product.seller?.email}</span>
                                         <div className="meta2">

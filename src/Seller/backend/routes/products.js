@@ -110,8 +110,16 @@ router.post('/', handleUpload, async (req, res) => {
 });
 
 // Update product
+// Update product
 router.put('/:id', async (req, res) => {
   try {
+    // Check if the product exists
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Proceed with update
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -126,12 +134,20 @@ router.put('/:id', async (req, res) => {
 // Delete product
 router.delete('/:id', async (req, res) => {
   try {
+    // Check if the product exists
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    // Proceed with deletion
     await Product.findByIdAndDelete(req.params.id);
     res.json({ message: 'Product deleted' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 // Get all products for a seller
 router.get('/seller/:sellerId', async (req, res) => {

@@ -106,8 +106,8 @@ const Signup = () => {
                     username: formData.username,
                     shopName: formData.shopName,
                     location: formData.location,
-                    latitude: formData.latitude ? parseFloat(formData.latitude) : null,
-                    longitude: formData.longitude ? parseFloat(formData.longitude) : null,
+                    latitude: formData.latitude ? parseFloat(formData.latitude) : undefined,
+                    longitude: formData.longitude ? parseFloat(formData.longitude) : undefined,
                     landmarks: formData.landmarks,
                     contact: formData.contact,
                     description: formData.description

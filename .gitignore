@@ -8,8 +8,8 @@
 # testing
 /coverage
 #files
-/src/Shared/backend/.env
-
+/src/Seller/backend/.env
+/src/Seller/backend/uploads
 # production
 /build
 

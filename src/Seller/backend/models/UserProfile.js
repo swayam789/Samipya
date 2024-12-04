@@ -69,9 +69,6 @@ const userProfileSchema = new mongoose.Schema({
 
 // Create indexes for frequently queried fields
 userProfileSchema.index({ userId: 1 }, { unique: true });
-userProfileSchema.index({ shopName: 1 }, { unique: true });
-userProfileSchema.index({ location: 1 });
-
 const UserProfile = mongoose.model('UserProfile', userProfileSchema);
 
 module.exports = UserProfile;
