@@ -1,0 +1,146 @@
+.photoa{
+    width: 80%;
+    height: 80vh;
+    translate: 10% 1%;
+    overflow: hidden;
+    position: relative; 
+    
+   }
+   #idk{
+    border: 1px solid black;
+   }
+   
+   .form{
+    translate: 6%;
+    display: inline-block;
+    top: 0;
+    width: 30%;
+    vertical-align: top;
+  position: absolute; 
+  
+  
+   }
+   .contact-a{
+    width: 100%;
+    margin-top: 100px;
+   }
+   
+   #txtbox{
+    border-radius: 6px;
+    width: 100%;
+    height: 30px;
+    padding-left: 1%;
+   }
+   #txtbox1{
+    border-radius: 6px;
+    width: 100%;
+    height: 200px;
+    padding-left: 1%;
+    padding-top: 1%;
+   }
+   input::placeholder {
+    font-style: italic; 
+    
+  }
+  [id^="txtbox"]:focus::placeholder {
+    color: lightcoral;
+  }
+  textarea::placeholder {
+
+    font-style: italic; 
+  }
+  #submit{
+    color: black;
+    border: 1px solid black;
+    padding: 1%;
+    border-radius: 10px;
+  }
+  #submit:hover{
+    color: lightcoral;
+    border: 1px solid lightsalmon;
+    cursor: pointer;
+  }
+
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+    max-width: 1200px;
+    padding: 150px;
+    background: white;
+    z-index: 3;
+    position: relative;
+}
+
+.contact-info {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info h1 {
+    margin-bottom: 30px;
+    color: var(--text-primary);
+}
+
+.info-section {
+    margin-bottom: 25px;
+}
+
+.info-section h3 {
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.info-section p {
+    color: var(--text-secondary);
+    margin: 5px 0;
+}
+
+.contact-form-section {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+.submit-button {
+    background: var(--primary-light);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+
+.submit-button:hover {
+    background: #2C5282;
+}
+
