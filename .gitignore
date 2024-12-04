@@ -7,6 +7,8 @@
 
 # testing
 /coverage
+#files
+/src/Shared/backend/.env
 
 # production
 /build

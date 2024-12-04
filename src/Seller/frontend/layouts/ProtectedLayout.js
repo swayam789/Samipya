@@ -1,12 +1,14 @@
 import React from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import Header from '../Header/header';
 import Sidebar from '../sidebar/sidebar';
 
 const ProtectedLayout = () => {
+  // const { isAuthenticated, isLoading } = useAuth();
+  const location = useLocation();
   const isAuthenticated = 1;
   const isLoading = 0;
-  const location = useLocation();
   
   // Pages where sidebar should be hidden
   const noSidebarPages = ['/seller/dashboard', '/seller/about'];

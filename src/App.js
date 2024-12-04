@@ -4,9 +4,17 @@ import Career from './Shared/frontend/career/Career';
 import Contacts from './Shared/frontend/contacts/contacts';
 import ProtectedLayout from './Seller/frontend/layouts/ProtectedLayout';
 import Home from './Seller/frontend/Home/home';
+// import { AuthProvider } from './Seller/frontend/context/AuthContext';
+import AboutB from './Shared/frontend/About_us/about';
+import Dashboard from './Seller/frontend/dashboard/Dashboard';
+import ProductDetails from './Seller/frontend/product_details/ProductDetails'
+import Statistics from './Seller/frontend/statistics/Statistics';
+import Reviews from './Seller/frontend/Reviews/Reviews';
+import Notifications from './Seller/frontend/Notifications/Notifications';
 function App() {
   return (
     <Router>
+        {/* <AuthProvider> */}
           <div className="app">
             <Routes>
               
@@ -22,7 +30,7 @@ function App() {
                 <Route path="career" element={<Career/>} />
                 <Route path="contact" element={<Contacts/>} />
                 <Route path="register" element={<h1>Register</h1>} />
-                <Route path="about_us" element={<h1>About</h1>} />
+                <Route path="about_us" element={<AboutB/>} />
                 <Route path="products" element={<h1>Products</h1>} />
               </Route>
 
@@ -36,19 +44,20 @@ function App() {
               <Route path="/seller/*" element={<ProtectedLayout/>}>
                 <Route index element={<Navigate to="home" replace />} />
                 <Route path="home" element={<Home/>} />
-                <Route path="dashboard" element={<h1>Dashboard</h1>} />
-                <Route path="profile" element={<h1>Profile</h1>} />
-                <Route path="products" element={<h1>ProductDetails</h1>} />
-                <Route path="statistics" element={<h1>Statistics</h1>} />
-                <Route path="reviews" element={<h1>Reviews</h1>} />
-                <Route path="notifications" element={<h1>Notifications</h1>} />
+                <Route path="dashboard" element={<Dashboard/>} />
+                <Route path="profile" element={<h1>profile</h1>} />
+                <Route path="products" element={<ProductDetails/>} />
+                <Route path="statistics" element={<Statistics/>} />
+                <Route path="reviews" element={<Reviews/>} />
+                <Route path="notifications" element={<Notifications/>} />
                 <Route path="promotions" element={<h1>Promotions</h1>} />
-                <Route path="about" element={<h1>About</h1>} />
+                <Route path="about" element={<AboutB/>} />
                 <Route path="career" element={<Career/>} />
                 <Route path="contact" element={<Contacts/>} />
               </Route>
             </Routes>
           </div>
+          {/* </AuthProvider>  */}
     </Router>
   );
 } 
