@@ -22,6 +22,8 @@ import Signin from './Seller/frontend/auth/Signup'
 import Profile from './Seller/frontend/profile/Profile';
 import { RatingProvider } from './Seller/frontend/context/RatingContext';
 import ProductsPage from './User/frontend/pages/ProductsPage';
+import SellerProfile from './User/frontend/components/SellerProfile';
+
 function App() {
   return (
     <Router>
@@ -44,6 +46,7 @@ function App() {
                 <Route path="register" element={<Register/>} />
                 <Route path="about_us" element={<AboutB/>} />
                 <Route path="products" element={<ProductsPage/>} />
+                <Route path="seller-profile/:_id" element={<SellerProfile />} />
               </Route>
 
               {/* Redirects */}

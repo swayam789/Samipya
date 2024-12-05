@@ -189,3 +189,6 @@ process.on('SIGTERM', () => {
         });
     });
 });
+
+const sellerRoutes = require('../../User/backend/routes/sellerRoutes');
+app.use('/', sellerRoutes);

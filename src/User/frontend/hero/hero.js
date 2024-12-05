@@ -6,12 +6,15 @@ import { useNavigate } from 'react-router-dom';
 const Hero = () => {
     const [locationValue, setLocationValue] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
+    const [Local,SetLocal] = useState('');
     const navigate = useNavigate();
-
+  
     const getLocation = () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-                (position) => {
+                (position) => 
+                    {
+                    getLocationName(position.coords.latitude, position.coords.longitude);
                     // On success, update input with coordinates
                     const coords = `${position.coords.latitude}, ${position.coords.longitude}`;
                     setLocationValue(coords);
@@ -38,9 +41,23 @@ const Hero = () => {
             alert("Geolocation is not supported by this browser.");
         }
     };
-
+    const getLocationName = (la, lo) =>
+    {
+        
+            const url = `https://nominatim.openstreetmap.org/reverse?lat=${la}&lon=${lo}&format=json`;
+          
+            fetch(url)
+              .then(response => response.json())
+              .then(data => {
+                SetLocal(data.display_name);  // This is the human-readable location name
+              })
+              .catch(error => console.log('Error: ', error));
+          
+    }
     const handleManualInput = (e) => {
         setLocationValue(e.target.value);
+        SetLocal(e.target.value)
+        console.log(locationValue);
     };
 
     const handleSearch = (e) => {
@@ -71,7 +88,7 @@ const Hero = () => {
                         <div className="location-box">
                             <input 
                                 type="text" 
-                                value={locationValue}
+                                value={Local}
                                 onChange={handleManualInput}
                                 placeholder="Enter your location..." 
                             />
