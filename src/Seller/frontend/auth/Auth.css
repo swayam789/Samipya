@@ -118,7 +118,7 @@
 }
 
 .auth-button1 {
-    margin-top: 5rem;
+    margin-top: 8rem;
     width: 50%;
     display: block;
     margin-left: auto;
@@ -143,7 +143,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.auth-button:active {
+.auth-button1:active {
     transform: translateY(0);
     box-shadow: none;
 }
@@ -242,20 +242,25 @@
     gap: 1rem;
 }
 
-.location-btn {
+/* .location-btn {
     padding: 0.5rem 1rem;
     background: #f8f9fa;
     border: 1px solid #dee2e6;
     border-radius: 4px;
     cursor: pointer;
+} */
+.location-btn
+{
+    border-radius: 6px;
 }
-
-.location-btn:hover {
+/* .location-btn:hover {
     background: #e9ecef;
-}
+} */
 
 .auth-button1:disabled {
     background: #ccc;
     cursor: not-allowed;
 }
- 
+#auth12{
+    margin-top: 3rem;
+}

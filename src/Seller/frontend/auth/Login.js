@@ -54,7 +54,7 @@ const Login = () => {
                             required
                         />
                     </div>
-                    <button type="submit" className="auth-button1">Login</button>
+                    <button type="submit" id = "auth12" className="auth-button1">Login</button>
                 </form>
                 <p className="auth-link">
                     Don't have an account? <Link to="/seller/signup">Sign up</Link>

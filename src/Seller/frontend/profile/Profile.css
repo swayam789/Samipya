@@ -381,14 +381,14 @@
   justify-content: flex-end;
 }
 
-.footer {
+/* .footer {
     background: #1a1a1a;
     color: white;
     padding: 3rem 0 1rem;
     position: relative;
     margin-top: 4rem;
     width: 100%;
-}
+} */
 
 .footer-grid {
     display: grid;

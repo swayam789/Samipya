@@ -38,44 +38,45 @@ const Profile = () => {
         setLoading(false);
     }, [navigate, user]);
 
-    const handleImageChange = async (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const formData = new FormData();
-            formData.append('profileImage', file);
-            formData.append('userId', user._id);
-            
-            try {
-                const response = await fetch('http://localhost:5000/api/users/upload-profile-image', {
-                    method: 'POST',
-                    body: formData,
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    
-                    setUserData(prev => ({
-                        ...prev,
-                        profileImage: data.imagePath
-                    }));
-                    
-                    const currentUser = JSON.parse(localStorage.getItem('user'));
-                    localStorage.setItem('user', JSON.stringify({
-                        ...currentUser,
-                        profileImage: data.imagePath
-                    }));
-                    
-                    setShowImageModal(false);
-                } else {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || 'Failed to upload image');
-                }
-            } catch (error) {
-                console.error('Error uploading image:', error);
-                alert(error.message || 'Failed to upload image. Please try again.');
+    const handleImageChange = async (id, file) => {
+        const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+        const token = localStorage.getItem('seller_token');
+        
+        const formData = new FormData();
+        formData.append('profileImage', file); // Add the file to the FormData object
+    
+        try {
+            const response = await fetch(`${API_URL}/seller/profile/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: formData, // Send FormData containing the image
+            });
+    
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Profile image updated successfully:', data);
+                setUserData(prevUserData => ({
+                    ...prevUserData,
+                    profileImage: data.seller.profileImage, // Update the profileImage in the state
+                }));
+            } else {
+                const errorData = await response.json();
+                console.error('Error updating profile image:', errorData);
             }
+        } catch (error) {
+            console.error('Error:', error);
         }
     };
+    
+    const handleFileInputChange = (e) => {
+        const file = e.target.files[0]; // Get the selected file
+        if (file) {
+            handleImageChange(userData._id, file); // Call handleImageChange with the file and seller ID
+        }
+    };
+    
 
     const handlePhotoUpload = async () => {
         const file = previewUrl;
@@ -86,7 +87,7 @@ const Profile = () => {
             
             try {
                 const response = await fetch('http://localhost:5000/api/users/upload-photo', {
-                    method: 'POST',
+                    method: 'PUT',
                     body: formData,
                 });
 
@@ -223,7 +224,7 @@ const Profile = () => {
                                 type="file"
                                 id="modal-image-input"
                                 accept="image/*"
-                                onChange={handleImageChange}
+                                onChange={handleFileInputChange}
                                 style={{ display: 'none' }}
                             />
                         </div>

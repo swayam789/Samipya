@@ -108,8 +108,6 @@ router.post('/', handleUpload, async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
-
-// Update product
 // Update product
 router.put('/:id', async (req, res) => {
   try {
