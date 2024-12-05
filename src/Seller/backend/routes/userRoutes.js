@@ -65,5 +65,45 @@ router.get('/image/:filename', async (req, res) => {
         res.status(500).json({ error: 'Error retrieving image' });
     }
 });
+    // for finding seller location
+router.get('/api/seller-location/:sellerId', async (req, res) => {
+    try {
+        console.log('Looking for seller ID:', req.params.sellerId);
+        
+        let sellerProfile;
+        try {
+            sellerProfile = await UserProfile.findOne({ 
+                $or: [
+                    { _id: req.params.sellerId },
+                    { userId: req.params.sellerId }
+                ]
+            });
+        } catch (findError) {
+            console.log('Error finding seller:', findError.message);
+        }
+        
+        if (!sellerProfile) {
+            console.log('Seller profile not found for ID:', req.params.sellerId);
+            return res.json({
+                location: 'Location not available',
+                latitude: 0,
+                longitude: 0,
+                isDefault: true
+            });
+        }
+        
+        console.log('Found seller profile:', sellerProfile);
+        res.json({
+            location: sellerProfile.location || sellerProfile.address || 'No address available',
+            latitude: sellerProfile.latitude || 0,
+            longitude: sellerProfile.longitude || 0,
+            isDefault: true
+        });
+    } catch (error) {
+        console.error('Error in seller location route:', error);
+        res.status(500).json({ message: 'Error fetching seller location' });
+    }
+});
+
 
 module.exports = router; 

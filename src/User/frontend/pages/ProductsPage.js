@@ -132,9 +132,8 @@ const ProductsPage = () => {
                 setSellerLocation({
                     ...response.data,
                     location: response.data.location || response.data.address || 'No address available',
-                    latitude: response.data.latitude || 20.2961,
-                    longitude: response.data.longitude || 85.8245,
-                    isDefault: response.data.isDefault || false
+                    latitude: response.data.latitude || 0,
+                    longitude: response.data.longitude || 0
                 });
                 setSelectedProduct(product);
                 setShowModal(true);
@@ -147,8 +146,8 @@ const ProductsPage = () => {
             console.error('Error in handleProductClick:', error);
             setSellerLocation({
                 location: 'Location not available',
-                latitude: 20.2961,
-                longitude: 85.8245,
+                latitude: 0,
+                longitude: 0,
                 isDefault: true
             });
             setSelectedProduct(product);
@@ -250,7 +249,7 @@ const ProductsPage = () => {
                                                 className="product-image2"
                                                 onError={(e) => {
                                                     e.target.onerror = null;
-                                                    e.target.src = '/placeholder-image.jpg';
+                                                    e.target.src = '/images/placeholder-image.png';
                                                 }}
                                             />
                                         ) : (

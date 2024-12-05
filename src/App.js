@@ -6,8 +6,8 @@ import ProtectedLayout from './Seller/frontend/layouts/ProtectedLayout';
 import Home from './Seller/frontend/Home/home';
 import { AuthProvider } from './Seller/frontend/context/AuthContext';
 import AboutB from './Shared/frontend/About_us/about';
-import Dashboard from './Seller/frontend/dashboard/Dashboard';
-import ProductDetails from './Seller/frontend/product_details/ProductDetails'
+import Subscription from './Seller/frontend/dashboard/subcription';
+import ProductDetails from './Seller/frontend/product_details/ProductDetails';
 import Statistics from './Seller/frontend/statistics/Statistics';
 import Reviews from './Seller/frontend/Reviews/Reviews';
 import Notifications from './Seller/frontend/Notifications/Notifications';
@@ -56,7 +56,7 @@ function App() {
               <Route path="/seller/*" element={<ProtectedLayout/>}>
                 <Route index element={<Navigate to="home" replace />} />
                 <Route path="home" element={<Home/>} />
-                <Route path="dashboard" element={<Dashboard/>} />
+                <Route path="subscription" element={<Subscription/>} />
                 <Route path="profile" element={<Profile/>} />
                 <Route path="products" element={<ProductDetails/>} />
                 <Route path="statistics" element={<Statistics/>} />

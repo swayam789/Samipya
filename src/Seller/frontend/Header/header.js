@@ -16,7 +16,7 @@ const Header = () => {
                 
                 <nav className="nav-links">
                     <Link to="/user/home">User</Link>
-                    <Link to="/seller/dashboard">Dashboard</Link>
+                    <Link to="/seller/Subscription">Subscription</Link>
                     <Link to="/seller/about">About us</Link>
                     <Link to="/seller/career">Career</Link>
                     <Link to="/seller/contact">Contact</Link>

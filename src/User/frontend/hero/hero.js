@@ -53,7 +53,7 @@ const Hero = () => {
     };
 
     return (
-        <>
+        <div className='uhome'>
             <section className="hero">
                 <div className="container1">
                     <h2 className="hero-title" style={{fontSize: '3rem', marginTop: '5rem'}}>From Pin to Pinnacle</h2>
@@ -91,7 +91,7 @@ const Hero = () => {
                 </div>
             </section>
             <Footer/>
-        </>
+        </div>
     );
 };
 

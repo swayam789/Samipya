@@ -5,7 +5,6 @@ import { useRating } from '../context/RatingContext';
 
 const Reviews = () => {
     const [reviews, setReviews] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { ratingStats, updateRatingStats } = useRating();
 
@@ -24,7 +23,7 @@ const Reviews = () => {
                 console.error('Error fetching reviews:', error);
                 setError('Failed to load reviews');
             } finally {
-                setLoading(false);
+                console.log('loaded');
             }
         };
 
@@ -82,7 +81,10 @@ const Reviews = () => {
         if (diffDays < 365) return `${Math.floor(diffDays / 30)} months ago`;
         return `${Math.floor(diffDays / 365)} years ago`;
     };
-
+    if(error)
+    {
+        <h1>Error loading Reviews</h1>
+    }
     return (
         <div className="det-content">
             <div className="reviews-header">

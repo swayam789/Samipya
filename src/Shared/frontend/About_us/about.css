@@ -4,6 +4,9 @@
     text-align: center;
     color: var(--white);
 }
+.aboutr{
+background: whitesmoke;
+}
 .about-containers{
     background-color: whitesmoke;
     padding: 1%;

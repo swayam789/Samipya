@@ -224,9 +224,17 @@ const ProductDetails = () => {
                 <div key={product._id} className="product-card">
                     <div className="product-image">
                         {product.imageUrl ? (
-                           <img src={product.imageUrl} alt={product.name} />
+                           <img 
+                           src={product.imageUrl || './images/placeholder-image.png'} 
+                           alt={product.name || 'Product image'} 
+                           onError={(e) => { 
+                             e.target.onerror = null; 
+                             e.target.src = '/images/placeholder-image.png'; 
+                    }}
+        />
+                         
                         ) : (
-                            <div className="no-image">No Image Available</div>
+                            <div className="no-image"> No Image Available</div>
                         )}
                     </div>
                     <div className="product-info">

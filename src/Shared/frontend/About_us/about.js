@@ -3,7 +3,7 @@ import './about.css';
 import Footer from '../footer/footer';
 
 const AboutB = () => {
-        return (<>
+        return (<div className='aboutr'>
             <section className="about-hero">
             <div className="container1">
                 <h1>About Samipya</h1>
@@ -85,7 +85,7 @@ const AboutB = () => {
 
         
         </div><Footer />
-        </>
+        </div>
     );
 };
 

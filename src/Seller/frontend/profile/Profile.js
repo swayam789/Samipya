@@ -6,6 +6,19 @@ import { FaCamera, FaStar } from 'react-icons/fa';
 import {FaMapMarkerAlt, FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaPhone, FaEnvelope } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useRating } from '../context/RatingContext';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+// Fix Leaflet default icon issue
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+    iconUrl: markerIcon,
+    shadowUrl: markerShadow
+});
+
 const API_URL = 'http://localhost:5000';
 
 const renderStars = (rating) => {
@@ -197,13 +210,22 @@ const Profile = () => {
                 <div className="profile-section">
                     <h2>Location on Map</h2>
                     <div className="location-map">
-                        <iframe title="Seller Location Map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.6069128108!2d84.42848711090319!3d27.69854167608836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3994fb49a5fb5741%3A0x72b0768dd53f3d4f!2sForbes%20College!5e0!3m2!1sen!2snp!4v1731852896264!5m2!1sen!2snp" 
-                        width="600"
-                        height="450" 
-                        style={{ border: 0 }} 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <MapContainer 
+                                center={[userData.latitude, userData.longitude]} 
+                                zoom={13} 
+                                style={{ height: '300px', width: '100%' }}
+                            >
+                                <TileLayer
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                />
+                                <Marker position={[userData.latitude, userData.longitude]}>
+                                    <Popup>
+                                        {userData.shopName || 'Swayam'}<br/>
+                                        {userData.location}
+                                    </Popup>
+                                </Marker>
+                            </MapContainer>
                     </div>
                 </div>
                 
