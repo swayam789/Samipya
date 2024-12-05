@@ -54,22 +54,35 @@ exports.searchProducts = async (req, res) => {
         const sellerIds = nearbyProfiles.map(profile => profile._id);
         console.log('Seller IDs:', sellerIds);
 
-        // Search in products collection
-        const products = await Product.find({
-            sellerId: { $in: sellerIds },  // Changed from seller to sellerId
-            name: { $regex: query, $options: 'i' },
-            stock: { $gt: 0 }
-        });
-
+        // // Search in products collection
+        // const products = await Product.find({
+        //     sellerId: { $in: sellerIds },  // Changed from seller to sellerId
+        //     name: { $regex: query, $options: 'i' },
+        //     stock: { $gt: 0 }
+        // });
+        const products = await Product.aggregate([
+            {
+                $search: {
+                    index: 'aa',
+                    text: {
+                        query: query,
+                        path: ['name', 'description'],
+                        fuzzy: { maxEdits: 2 },
+                    },
+                },
+            },
+            { $match: { sellerId: { $in: sellerIds }, stock: { $gt: 0 } } },
+            { $limit: 20 }
+        ]);// <-- Add .lean() here to return plain JavaScript objects
+        
         console.log('Found products:', products.length);
-
         // Add distance information
         const productsWithDistance = products.map(product => {
             const sellerProfile = nearbyProfiles.find(
                 profile => profile.userId.toString() === product.sellerId.toString()
             );
             return {
-                ...product.toObject(),
+                ...product,
                 distance: sellerProfile ? sellerProfile.distance * 111.12 : null
             };
         });
