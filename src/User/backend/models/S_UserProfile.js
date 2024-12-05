@@ -16,11 +16,14 @@ const S_UserProfileSchema = new mongoose.Schema({
       type: String,
       enum: ['Point'],
       required: true
-    },
-    coordinates: {
-      type: [Number], // [longitude, latitude]
-      required: true
-    }
+    }},
+  latitude: {
+    type: Number,
+    required: true
+  },
+  longitude: {
+    type: Number,
+    required: true
   }
 }, { 
   timestamps: true,

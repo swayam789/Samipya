@@ -116,6 +116,7 @@ app.use('/seller/products', productsRoutes);
 
 // User Routes (with prefix)
 app.use('/user/api/products', userProductRoutes); // Add user routes with prefix
+app.use('/api', require('../../User/backend/routes/userRoutes')); // Add this line for seller location endpoint
 
 // Global error handling middleware
 app.use((err, req, res, next) => {

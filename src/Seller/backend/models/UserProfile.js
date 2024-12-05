@@ -67,8 +67,5 @@ const userProfileSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Create indexes for frequently queried fields
-userProfileSchema.index({ userId: 1 }, { unique: true });
-const UserProfile = mongoose.model('UserProfile', userProfileSchema);
-
-module.exports = UserProfile;
+// Check if the model exists before creating it
+module.exports = mongoose.models.UserProfile || mongoose.model('UserProfile', userProfileSchema);

@@ -3,6 +3,18 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { FaRupeeSign, FaMapMarkerAlt, FaStore, FaSearch, FaPhone, FaEnvelope} from 'react-icons/fa';
 import './ProductsPage.css';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+// Fix Leaflet default icon issue
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+    iconUrl: markerIcon,
+    shadowUrl: markerShadow
+});
 
 /**
  * ProductsPage Component
@@ -16,6 +28,9 @@ const ProductsPage = () => {
     const [error, setError] = useState(null);
     const [searchParams, setSearchParams] = useState({ query: '', location: '' });
     const location = useLocation();
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [sellerLocation, setSellerLocation] = useState({location: '', latitude: 0, longitude: 0});
 
     /**
      * Effect hook to handle URL search parameters
@@ -94,6 +109,105 @@ const ProductsPage = () => {
         const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
         return `${API_URL}/uploads/${imagePath}`;
     };
+
+    const handleProductClick = async (product) => {
+        try {
+            console.log('Product clicked:', product);
+
+            const sellerId = product.seller?._id || product.sellerId;
+            console.log('Using seller ID:', sellerId);
+            
+            if (!sellerId) {
+                throw new Error('No seller ID available for this product');
+            }
+            
+            const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+            const endpoint = `${API_URL}/api/seller-location/${sellerId}`;
+            console.log('Calling endpoint:', endpoint);
+            
+            try {
+                const response = await axios.get(endpoint);
+                console.log('Seller location response:', response.data);
+                
+                setSellerLocation({
+                    ...response.data,
+                    location: response.data.location || response.data.address || 'No address available',
+                    latitude: response.data.latitude || 20.2961,
+                    longitude: response.data.longitude || 85.8245,
+                    isDefault: response.data.isDefault || false
+                });
+                setSelectedProduct(product);
+                setShowModal(true);
+                
+            } catch (apiError) {
+                console.error('API Error details:', apiError.response);
+                throw new Error(`Failed to fetch seller location: ${apiError.response?.data?.message || apiError.message}`);
+            }
+        } catch (error) {
+            console.error('Error in handleProductClick:', error);
+            setSellerLocation({
+                location: 'Location not available',
+                latitude: 20.2961,
+                longitude: 85.8245,
+                isDefault: true
+            });
+            setSelectedProduct(product);
+            setShowModal(true);
+        }
+    };
+
+    const ProductModal = ({ product, onClose }) => {
+        if (!product || !sellerLocation) return null;
+        
+        return (
+            <div className="modal-overlay" onClick={onClose}>
+                <div className="modal-content" onClick={e => e.stopPropagation()}>
+                    <button className="close-button" onClick={onClose}>&times;</button>
+                    <div className="modal-body">
+                        <div className="product-details-container">
+                            <img 
+                                src={getImageUrl(product.imagePath)} 
+                                alt={product.name} 
+                                className="modal-product-image"
+                            />
+                            <div className="product-info">
+                                <h2>{product.name}</h2>
+                                <p className="description">{product.description}</p>
+                                <p className="price"><FaRupeeSign /> {product.price}</p>
+                                <p className="stock">Stock: {product.stock}</p>
+                                <p className="category">Category: {product.category}</p>
+                                <div className="seller-info">
+                                    <h3>Seller Information</h3>
+                                    <p><FaStore /> {product.seller?.shopName || 'Swayam'}</p>
+                                    <p><FaPhone /> {product.seller?.contact || 'No number'}</p>
+                                    <p><FaEnvelope /> {product.seller?.email}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="map-container">
+                            <MapContainer 
+                                center={[sellerLocation.latitude, sellerLocation.longitude]} 
+                                zoom={13} 
+                                style={{ height: '300px', width: '100%' }}
+                            >
+                                <TileLayer
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                />
+                                <Marker position={[sellerLocation.latitude, sellerLocation.longitude]}>
+                                    <Popup>
+                                        {product.seller?.shopName || 'Swayam'}<br/>
+                                        {sellerLocation.address}
+                                    </Popup>
+                                </Marker>
+                            </MapContainer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     if (error)
     {
         return (<div>Error loading</div>);
@@ -127,7 +241,7 @@ const ProductsPage = () => {
                         </div>
                         <div className="products-grid2">
                             {products.map((product) => (
-                                <div key={product._id} className="product-card2">
+                                <div key={product.sellerId} className="product-card2" onClick={() => handleProductClick(product)}>
                                     <div className="image-container2">
                                         {product.imagePath ? (
                                             <img
@@ -189,6 +303,7 @@ const ProductsPage = () => {
                     </div>
                 )}
             </div>
+            {showModal && <ProductModal product={selectedProduct} onClose={() => setShowModal(false)} />}
         </div>
     );
 };
